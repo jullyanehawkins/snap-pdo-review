@@ -34,3 +34,21 @@ public function delete(\PDO $pdo) : void {
 	$parameters = ["senatorId" => $this->senatorId->getBytes()];
 	$statement->execute($parameters);
 }
+
+/**
+ * updates this Senator in mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+public function update(\PDO $pdo) : void {
+
+	// create query template
+	$query = "UPDATE senator SET senatorName = :senatorName, senatorNumLives = :senatorNumLives WHERE senatorId = :senatorId";
+	$statement = $pdo->prepare($query);
+
+
+	$parameters = ["senatorId" => $this->senatorId->getBytes(), "senatorName" => $this->senatorName->getBytes(), "senatorNumLives" => $this->senatorNumLives];
+	$statement->execute($parameters);
+}
